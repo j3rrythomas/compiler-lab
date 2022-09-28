@@ -1,14 +1,11 @@
 %{
     #include "y.tab.h"
 %}
-
 %%
 
-[a-zA-Z_][a-zA-Z_0-9]* return id;
+[a-zA-Z_][a-zA-Z_0-9]* {return id;}
 
-[0-9]+(\.[0-9]*)?      return num;
-
-[+-*/]                  return op;
+[0-9]+(\.[0-9]*)?      {yylval=atoi(yytext);return num;}
 
 .                      return yytext[0];
 

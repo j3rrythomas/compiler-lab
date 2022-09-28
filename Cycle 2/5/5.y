@@ -1,10 +1,6 @@
-%{                          
-    #include <stdio.h>           /* imports */
-    #include <stdlib.h>  
-    #include <ctype.h>                            
-    int yylex(void);             /* function prototype */
-    int yyerror();  
-    int valid=1;
+%{
+    #include<stdio.h>
+    int valid=1;   
 %}
 
 %token num id op
@@ -33,32 +29,19 @@ x :     op s
 
 %%
 
-int yyerror()
-
-{
-
+int yyerror() {
     valid=0;
-
-    printf("\nInvalid expression!\n");
-
     return 0;
-
 }
 
-int main()
-
-{
-
+int main() {
     printf("Enter the expression:\n");
-
     yyparse();
-
-    if(valid)
-
-    {
-
+    if(valid)    {
         printf("\nValid expression.\n");
-
+    }
+    else{
+        printf("\nInvalid expression.\n");
     }
 
 }
