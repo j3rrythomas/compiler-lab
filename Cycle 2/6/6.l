@@ -4,7 +4,7 @@
 
 %%
 
-[a-zA-Z][a-zA-Z0-9]*    return id;
+[a-zA-Z_][a-zA-Z0-9_]*    return id;
 
 .                      return yytext[0];
 

@@ -8,7 +8,7 @@
 
 [0-9]+(\.[0-9]*)?      return num;
 
-[+-*/]                  return op;
+[+\-*/]                  return op;
 
 .                      return yytext[0];
 
