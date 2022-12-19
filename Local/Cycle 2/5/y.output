@@ -1,0 +1,239 @@
+Grammar
+
+    0 $accept: start $end
+
+    1 start: id '=' s ';'
+
+    2 s: id x
+    3  | num x
+    4  | '-' num x
+    5  | '(' s ')' x
+
+    6 x: op s
+    7  | '-' s
+    8  | %empty
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 5
+    ')' (41) 5
+    '-' (45) 4 7
+    ';' (59) 1
+    '=' (61) 1
+    error (256)
+    num (258) 3 4
+    id (259) 1 2
+    op (260) 6
+
+
+Nonterminals, with rules where they appear
+
+    $accept (11)
+        on left: 0
+    start (12)
+        on left: 1
+        on right: 0
+    s (13)
+        on left: 2 3 4 5
+        on right: 1 5 6 7
+    x (14)
+        on left: 6 7 8
+        on right: 2 3 4 5
+
+
+State 0
+
+    0 $accept: . start $end
+
+    id  shift, and go to state 1
+
+    start  go to state 2
+
+
+State 1
+
+    1 start: id . '=' s ';'
+
+    '='  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 start: id '=' . s ';'
+
+    num  shift, and go to state 5
+    id   shift, and go to state 6
+    '-'  shift, and go to state 7
+    '('  shift, and go to state 8
+
+    s  go to state 9
+
+
+State 4
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 5
+
+    3 s: num . x
+
+    op   shift, and go to state 10
+    '-'  shift, and go to state 11
+
+    $default  reduce using rule 8 (x)
+
+    x  go to state 12
+
+
+State 6
+
+    2 s: id . x
+
+    op   shift, and go to state 10
+    '-'  shift, and go to state 11
+
+    $default  reduce using rule 8 (x)
+
+    x  go to state 13
+
+
+State 7
+
+    4 s: '-' . num x
+
+    num  shift, and go to state 14
+
+
+State 8
+
+    5 s: '(' . s ')' x
+
+    num  shift, and go to state 5
+    id   shift, and go to state 6
+    '-'  shift, and go to state 7
+    '('  shift, and go to state 8
+
+    s  go to state 15
+
+
+State 9
+
+    1 start: id '=' s . ';'
+
+    ';'  shift, and go to state 16
+
+
+State 10
+
+    6 x: op . s
+
+    num  shift, and go to state 5
+    id   shift, and go to state 6
+    '-'  shift, and go to state 7
+    '('  shift, and go to state 8
+
+    s  go to state 17
+
+
+State 11
+
+    7 x: '-' . s
+
+    num  shift, and go to state 5
+    id   shift, and go to state 6
+    '-'  shift, and go to state 7
+    '('  shift, and go to state 8
+
+    s  go to state 18
+
+
+State 12
+
+    3 s: num x .
+
+    $default  reduce using rule 3 (s)
+
+
+State 13
+
+    2 s: id x .
+
+    $default  reduce using rule 2 (s)
+
+
+State 14
+
+    4 s: '-' num . x
+
+    op   shift, and go to state 10
+    '-'  shift, and go to state 11
+
+    $default  reduce using rule 8 (x)
+
+    x  go to state 19
+
+
+State 15
+
+    5 s: '(' s . ')' x
+
+    ')'  shift, and go to state 20
+
+
+State 16
+
+    1 start: id '=' s ';' .
+
+    $default  reduce using rule 1 (start)
+
+
+State 17
+
+    6 x: op s .
+
+    $default  reduce using rule 6 (x)
+
+
+State 18
+
+    7 x: '-' s .
+
+    $default  reduce using rule 7 (x)
+
+
+State 19
+
+    4 s: '-' num x .
+
+    $default  reduce using rule 4 (s)
+
+
+State 20
+
+    5 s: '(' s ')' . x
+
+    op   shift, and go to state 10
+    '-'  shift, and go to state 11
+
+    $default  reduce using rule 8 (x)
+
+    x  go to state 21
+
+
+State 21
+
+    5 s: '(' s ')' x .
+
+    $default  reduce using rule 5 (s)

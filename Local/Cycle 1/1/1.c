@@ -16,76 +16,25 @@ int isBracket(char *str);
 
 char *retPattern(char *str);
 
-// Hello
-
-/* multi
-line comment
-*/
-
-
 void main()
 {
     FILE *fin, *fout;
-    fin = fopen("1.txt", "rb"); // comment
-    if (fin == NULL)
-        exit(1);
+    fin = fopen("1.c", "r");
     char ch, str[100];
     int countn = 1;
     while ((ch = fgetc(fin)) != EOF)
     {
-        if (ch == '/')
+        if (ch == ' ' || ch == '\n' || ch == '\t' || isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '*')
         {
-            if ((ch = fgetc(fin)) == '*')
-            {
-                memset(str, 0, sizeof(str));
-            LOOP:
-                while (ch = fgetc(fin) != '*')
-                {
-                    if (ch == 10)
-                    {
-                        countn++;
-                    }
-                    continue;
-                }
-                if (ch == 10)
-                {
-                    countn++;
-                }
-                if (ch = fgetc(fin) != '/')
-                {
-                    goto LOOP;
-                }
-            }
-            else if (ch == '/')
-            {
-                memset(str, 0, sizeof(str));
-                while ((ch = fgetc(fin)) != 10)
-                {
-                    continue;
-                }
-                if (ch == 10)
-                {
-                    countn++;
-                }
-            }
-            else
-            {
-                printf("%d: </,%s>\n", countn, "OPERATOR");
-            }
-        }
-        if (ch == ' ' || ch == '\n' || ch == '\t' || isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == '*' || ch == '&' || isOperator(&ch))
-        {
-            // flag = 0;
             if (strlen(str) >= 1)
             {
                 printf("%d: <%s,%s>\n", countn, str, retPattern(str));
             }
-            if (isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}')
+            if (isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']')
             {
                 printf("%d: <%c,%s>\n", countn, ch, "SYNC");
             }
-            if (ch == '*' || ch == '&' || isOperator(&ch))
-            {
+            if(ch=='*'){
                 printf("%d: <%c,%s>\n", countn, ch, "OPERATOR");
             }
             memset(str, 0, sizeof(str));
@@ -291,7 +240,7 @@ int isLiteral(char *str)
         return 1;
     return 0;
 }
-char *hell = "\"";
+
 int isSeperator(char *str)
 {
     const char *seperators[] = {",", ";"};
@@ -306,14 +255,14 @@ int isSeperator(char *str)
     return 0;
 }
 
-int isComment(char *str)
-{
-    if (matchPattern(str, "^\\/\\*.*\\*\\/$"))
-    {
-        return 1;
-    }
-    return 0;
-}
+// int isComment(char *str)
+// {
+//     if (matchPattern(str, "^\\/\\*.*\\*\\/$"))
+//     {
+//         return 1;
+//     }
+//     return 0;
+// }
 int isBracket(char *str)
 {
     const char *brackets[] = {"[", "]", "{", "}", "(", ")"};

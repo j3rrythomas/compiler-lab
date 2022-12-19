@@ -10,126 +10,23 @@ int isOperator(char *str);
 int isConstant(char *str);
 int isNumber(char *str);
 int isLiteral(char *str);
-int isSeperator(char *str);
-int isComment(char *str);
-int isBracket(char *str);
-
-char *retPattern(char *str);
-
-// Hello
-
-/* multi
-line comment
-*/
-
 
 void main()
 {
-    FILE *fin, *fout;
-    fin = fopen("1.txt", "rb"); // comment
-    if (fin == NULL)
-        exit(1);
-    char ch, str[100];
-    int countn = 1;
-    while ((ch = fgetc(fin)) != EOF)
+    char ip[100];
+    while (1)
     {
-        if (ch == '/')
+        printf("Enter ip\n");
+        scanf("%s", ip);
+        if (isConstant(ip) == 1)
         {
-            if ((ch = fgetc(fin)) == '*')
-            {
-                memset(str, 0, sizeof(str));
-            LOOP:
-                while (ch = fgetc(fin) != '*')
-                {
-                    if (ch == 10)
-                    {
-                        countn++;
-                    }
-                    continue;
-                }
-                if (ch == 10)
-                {
-                    countn++;
-                }
-                if (ch = fgetc(fin) != '/')
-                {
-                    goto LOOP;
-                }
-            }
-            else if (ch == '/')
-            {
-                memset(str, 0, sizeof(str));
-                while ((ch = fgetc(fin)) != 10)
-                {
-                    continue;
-                }
-                if (ch == 10)
-                {
-                    countn++;
-                }
-            }
-            else
-            {
-                printf("%d: </,%s>\n", countn, "OPERATOR");
-            }
-        }
-        if (ch == ' ' || ch == '\n' || ch == '\t' || isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == '*' || ch == '&' || isOperator(&ch))
-        {
-            // flag = 0;
-            if (strlen(str) >= 1)
-            {
-                printf("%d: <%s,%s>\n", countn, str, retPattern(str));
-            }
-            if (isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}')
-            {
-                printf("%d: <%c,%s>\n", countn, ch, "SYNC");
-            }
-            if (ch == '*' || ch == '&' || isOperator(&ch))
-            {
-                printf("%d: <%c,%s>\n", countn, ch, "OPERATOR");
-            }
-            memset(str, 0, sizeof(str));
-            if (ch == '\n')
-                countn++;
+            printf("Matched\n");
         }
         else
         {
-            strncat(str, (char *)&ch, 1);
+            printf("Not Matched\n");
         }
     }
-    // char ip;
-    // while (1)
-    // {
-    //     printf("Enter ip\n");
-    //     scanf("%c", &ip);
-    //     printf("%d\n", isBracket(&ip));
-    //     printf("%d\n", isSeperator(&ip));
-    // }
-}
-
-char *retPattern(char *str)
-{
-    if (isKeyword(str))
-    {
-        return "KEYWORD";
-    }
-    if (isConstant(str))
-    {
-        return "CONSTANT";
-    }
-    if (isOperator(str))
-    {
-        return "OPERATOR";
-    }
-    if (isSeperator(str))
-    {
-        return "SEPERATOR";
-    }
-    if (isIdentifier(str))
-    {
-        return "IDENTIFIER";
-    }
-    return "OTHER";
 }
 
 int isIdentifier(char *str)
@@ -289,42 +186,6 @@ int isLiteral(char *str)
         return 1;
     if (matchPattern(str, "^\'[^\']*\'$"))
         return 1;
-    return 0;
-}
-char *hell = "\"";
-int isSeperator(char *str)
-{
-    const char *seperators[] = {",", ";"};
-
-    for (int i = 0; i < 2; i++)
-    {
-        if (strcmp(str, seperators[i]) == 0 || strncmp(str, seperators[i], 1) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int isComment(char *str)
-{
-    if (matchPattern(str, "^\\/\\*.*\\*\\/$"))
-    {
-        return 1;
-    }
-    return 0;
-}
-int isBracket(char *str)
-{
-    const char *brackets[] = {"[", "]", "{", "}", "(", ")"};
-
-    for (int i = 0; i < 2; i++)
-    {
-        if (strcmp(str, brackets[i]) == 0 || strncmp(str, brackets[i], 1) == 0)
-        {
-            return 1;
-        }
-    }
     return 0;
 }
 

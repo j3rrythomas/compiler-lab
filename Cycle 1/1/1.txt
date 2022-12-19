@@ -73,7 +73,7 @@ void main()
                 printf("%d: </,%s>\n", countn, "OPERATOR");
             }
         }
-        if (ch == ' ' || ch == '\n' || ch == '\t' || isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == '*' || ch == '&' || isOperator(&ch))
+        if (ch == ' ' || ch == '\n' || ch == '\t' || isSeperator(&ch) || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == '*' || ch == '&' || isOperator(ch))
         {
             // flag = 0;
             if (strlen(str) >= 1)
